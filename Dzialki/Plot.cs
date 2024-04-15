@@ -1,8 +1,10 @@
 ﻿namespace Dzialki
 {
-    internal class Plot
+    internal class Plot : IEquatable<Plot>
     {
         private List<string> plot = new List<string>();
+        private int width = 30;
+        private int height = 30;
 
         public Plot(List<string> plot)
         {
@@ -40,16 +42,45 @@
                 return false;
         }
 
-        public bool isMirrored()
+        public Plot flipPlot()
+        // Method to flip plot by 180deg
         {
-            // TODO
-            return true;
+            var lines = new List<string>();
+            for (int i = height - 1; i >= 0; i--)
+            {
+                string line = "";
+                for (int j = width - 1; j >= 0; j--)
+                {
+                    line += plot[i][j];
+                }
+                lines.Add(line);
+            }
+            return new Plot(lines);
         }
 
         public int biggestRectangleSize()
         {
-            // TODO
-            return 0;
+            throw new NotImplementedException();
+        }
+
+        public bool Equals(Plot? other)
+        {
+
+            if (other == null)
+                return false;
+            else
+            {
+                bool equal = true;
+                for (int i = 0; i < height; i++)
+                {
+                    if (plot[i] != other.plot[i])
+                    {
+                        equal = false;
+                    }
+                }
+
+                return equal;
+            }
         }
     }
 }
