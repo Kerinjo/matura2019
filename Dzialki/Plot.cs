@@ -60,7 +60,51 @@
 
         public int biggestRectangleSize()
         {
-            throw new NotImplementedException();
+            bool terrainFound = false;
+            int biggestSize = 0;
+            int checkNumber = 0;
+            int i, j;
+
+            while (!terrainFound)
+            {
+                checkNumber += 1;
+                i = 0;
+                j = checkNumber - 1;
+
+                // Console.WriteLine($"Check no. {checkNumber}");
+                while (i < checkNumber && j < checkNumber)
+                {
+                    // Console.WriteLine($"Checking plot[{i}][{j}].");
+
+                    if (plot[i][j] == 'X')
+                    {
+                        terrainFound = true;
+                        biggestSize = checkNumber - 1;
+                        break;
+                    }
+
+                    // 2 * n - 1 checks per sector
+                    // 1st check - [0][0]
+                    // 2nd check - [0][1], [1][0], [1][1]
+                    // 3rd check - [0][2], [1][2], [2][0], [2][1], [2][2]
+                    // 4th check - [0][3], [1][3], [2][3], [3][0], [3][1], [3][2], [3][3]
+
+                    if (j + 1 < checkNumber)
+                    {
+                        j++;
+                    }
+                    else
+                    {
+                        i++;
+                        if (i + 1 >= checkNumber)
+                        {
+                            j = 0;
+                        }
+                    }
+                }
+            }
+
+            return biggestSize;
         }
 
         public bool Equals(Plot? other)

@@ -29,6 +29,9 @@ namespace Dzialki
             
             var flippedPlots = new Dictionary<int, Plot>();
 
+            int biggestRect = -1;
+            int biggestRectIndex = -1;
+
             for(int i = 0; i < plotList.Count; i++)
             {
                 Plot currentPlot = plotList[i];
@@ -61,8 +64,20 @@ namespace Dzialki
                     // not in dict? flip it and add.
                     flippedPlots.Add(i, currentPlot.flipPlot());
                 }
+
+                // 4.3
+                // calculate biggest rectangle size from top left
+                // that doesn't collide with terrain
+                int currentPlotRectSize = currentPlot.biggestRectangleSize();
+                if (currentPlotRectSize > biggestRect)
+                {
+                    biggestRect = currentPlotRectSize;
+                    biggestRectIndex = i;
+                }
+
             }
             Console.WriteLine($"grass covered fields: {grassCoveredFields}");
+            Console.WriteLine($"biggest rectangle size: {biggestRect}, index: {biggestRectIndex}"); 
         }
     }
 }
